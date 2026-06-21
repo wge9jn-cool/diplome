@@ -42,7 +42,12 @@
 
     function formatDate(raw) {
         if (!raw) return '';
-        return String(raw).replace('T', ' ').slice(0, 16);
+        var s = String(raw).replace('T', ' ').replace('.000Z', '').replace('Z', '');
+        return s.slice(0, 16);
+    }
+
+    function historyUrlWithRole() {
+        return historyUrl + '?appeal_id=' + encodeURIComponent(appealId) + '&role=' + encodeURIComponent(chatRole);
     }
 
     function appendMessage(senderType, text, date, msgId) {
@@ -69,7 +74,7 @@
     syncEmptyState();
 
     function loadHistory() {
-        fetch(historyUrl + '?appeal_id=' + encodeURIComponent(appealId))
+        fetch(historyUrlWithRole())
             .then(function (r) {
                 return r.json();
             })

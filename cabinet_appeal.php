@@ -377,7 +377,7 @@ function archive_comment_status_label(string $status): string {
             labels: { user: 'Вы', admin: 'Специалист' }
         };
     </script>
-    <script src="js/appeal-chat.js"></script>
+    <script src="js/appeal-chat.js?v=<?php echo (int) @filemtime(__DIR__ . '/js/appeal-chat.js'); ?>"></script>
     <script>
             (function () {
                 var wrap = document.querySelector('.archive-rating-picker');

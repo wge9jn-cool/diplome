@@ -20,7 +20,8 @@ if ($sender === null) {
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     $stmt = $pdo->prepare('
-        SELECT id, sender_type, sender_id, message, created_at
+        SELECT id, sender_type, sender_id, message,
+               DATE_FORMAT(created_at, \'%Y-%m-%d %H:%i:%s\') AS created_at
         FROM appeal_messages
         WHERE appeal_id = ?
         ORDER BY created_at ASC, id ASC
@@ -44,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $stmt = $pdo->prepare('INSERT INTO appeal_messages (appeal_id, sender_type, sender_id, message) VALUES (?, ?, ?, ?)');
     $stmt->execute([$appealId, $senderType, $senderId, $message]);
     $id = (int) $pdo->lastInsertId();
-    $stmt = $pdo->prepare('SELECT created_at FROM appeal_messages WHERE id = ?');
+    $stmt = $pdo->prepare("SELECT DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at FROM appeal_messages WHERE id = ?");
     $stmt->execute([$id]);
     $row = $stmt->fetch();
     $createdAt = $row ? $row['created_at'] : date('Y-m-d H:i:s');

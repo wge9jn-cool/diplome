@@ -585,7 +585,7 @@ function status_title_admin(string $code): string {
         };
     </script>
     <script src="../script.js"></script>
-    <script src="../js/appeal-chat.js"></script>
+    <script src="../js/appeal-chat.js?v=<?php echo (int) @filemtime(__DIR__ . '/../js/appeal-chat.js'); ?>"></script>
 </body>
 </html>
 

@@ -38,6 +38,15 @@ const DB_USER = process.env.DB_USER || 'root';
 const DB_PASS = process.env.DB_PASS || '';
 const DB_TIMEZONE = process.env.DB_TIMEZONE || '+05:00';
 
+function formatDbDateTime(value) {
+    if (value === null || value === undefined) return '';
+    if (value instanceof Date) {
+        const pad = (n) => String(n).padStart(2, '0');
+        return `${value.getFullYear()}-${pad(value.getMonth() + 1)}-${pad(value.getDate())} ${pad(value.getHours())}:${pad(value.getMinutes())}:${pad(value.getSeconds())}`;
+    }
+    return String(value).replace('T', ' ').replace('.000Z', '').replace('Z', '').slice(0, 19);
+}
+
 if (!WS_SECRET) {
     console.error('WS_SECRET is required. Copy .env.example to .env');
     process.exit(1);
@@ -50,6 +59,7 @@ const pool = mysql.createPool({
     database: DB_NAME,
     charset: 'utf8mb4',
     timezone: DB_TIMEZONE,
+    dateStrings: true,
     waitForConnections: true,
     connectionLimit: 10,
 });
@@ -180,12 +190,10 @@ wss.on('connection', (ws) => {
                 );
                 const id = result.insertId;
                 const [rows] = await pool.query(
-                    'SELECT created_at FROM appeal_messages WHERE id = ? LIMIT 1',
+                    "SELECT DATE_FORMAT(created_at, '%Y-%m-%d %H:%i:%s') AS created_at FROM appeal_messages WHERE id = ? LIMIT 1",
                     [id]
                 );
-                const createdAt = rows[0]
-                    ? rows[0].created_at
-                    : new Date().toISOString().slice(0, 19).replace('T', ' ');
+                const createdAt = rows[0] ? formatDbDateTime(rows[0].created_at) : formatDbDateTime(new Date());
 
                 const payload = {
                     type: 'message',
