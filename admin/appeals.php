@@ -99,17 +99,12 @@ function status_title_admin(string $code = null): string {
     <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="container header__inner">
-            <?php
-            $logoBase = '../';
-            $logoHref = admin_home_href();
-            $logoAdmin = true;
-            require __DIR__ . '/../includes/logo.php';
-            ?>
-            <?php require __DIR__ . '/includes/nav.php'; ?>
-        </div>
-    </header>
+    <?php
+    $logoBase = '../';
+    $logoHref = admin_home_href();
+    $logoAdmin = true;
+    require __DIR__ . '/includes/header_bar.php';
+    ?>
 
     <main class="section section--light">
         <div class="container">
@@ -117,7 +112,7 @@ function status_title_admin(string $code = null): string {
                 <h2>Обращения</h2>
             </div>
 
-            <form method="get" style="margin-bottom:16px; display:flex; gap:8px; flex-wrap:wrap;">
+            <form method="get" class="admin-filters-form" style="margin-bottom:16px; display:flex; gap:8px; flex-wrap:wrap;">
                 <div class="field" style="max-width:200px;">
                     <label for="status">Статус</label>
                     <select id="status" name="status">
@@ -227,6 +222,7 @@ function status_title_admin(string $code = null): string {
     </main>
 
     <?php $footerPrefix = '../'; require __DIR__ . '/../includes/footer.php'; ?>
+    <?php require __DIR__ . '/includes/scripts.php'; ?>
 </body>
 </html>
 

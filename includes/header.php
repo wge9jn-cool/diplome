@@ -40,6 +40,17 @@ $__hNav = function ($key) use ($headerActive) {
                         <a href="services.php" class="nav__link<?php echo $__hNav('services'); ?>">Услуги</a>
                         <a href="news.php" class="nav__link<?php echo $__hNav('news'); ?>">Новости</a>
                         <a href="contacts.php" class="nav__link<?php echo $__hNav('contacts'); ?>">Контакты</a>
+                        <?php if ($user): ?>
+                            <div class="nav__mobile-actions">
+                                <a href="cabinet.php#calculator" class="header__btn-consult header__btn-consult--mobile">Личный кабинет</a>
+                                <a href="logout.php" class="header__btn-login header__btn-login--logout header__btn-login--mobile">Выйти</a>
+                            </div>
+                        <?php else: ?>
+                            <div class="nav__mobile-actions">
+                                <a href="<?php echo htmlspecialchars($consultHref, ENT_QUOTES, 'UTF-8'); ?>" class="header__btn-consult header__btn-consult--mobile"<?php echo $consultScrollAttr; ?>>Бесплатная консультация</a>
+                                <a href="login.php" class="header__btn-login header__btn-login--mobile">Вход / Регистрация</a>
+                            </div>
+                        <?php endif; ?>
                     </nav>
                 <?php endif; ?>
             </div>
@@ -52,7 +63,7 @@ $__hNav = function ($key) use ($headerActive) {
                     <a href="<?php echo htmlspecialchars($consultHref, ENT_QUOTES, 'UTF-8'); ?>" class="header__btn-consult"<?php echo $consultScrollAttr; ?>>Бесплатная консультация</a>
                     <a href="login.php" class="header__btn-login">Вход / Регистрация</a>
                 <?php endif; ?>
-                <button class="header__burger" type="button" aria-label="Меню">
+                <button class="header__burger" type="button" aria-label="Меню" aria-expanded="false">
                     <span></span>
                     <span></span>
                     <span></span>

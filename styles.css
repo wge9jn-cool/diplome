@@ -23,11 +23,16 @@
     font-display: swap;
 }
 
+html {
+    overflow-x: clip;
+}
+
 html,
 body {
     margin: 0;
     padding: 0;
-    height: 100%;
+    min-height: 100%;
+    max-width: 100%;
 }
 
 body {
@@ -83,13 +88,15 @@ button {
 }
 
 .header__left {
-    flex: 0 0 auto;
+    flex: 1 1 auto;
+    min-width: 0;
 }
 
 .header__center {
     flex: 1 1 auto;
     display: flex;
     justify-content: center;
+    min-width: 0;
 }
 
 .header__right {
@@ -97,6 +104,7 @@ button {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-left: auto;
 }
 
 .logo {
@@ -207,20 +215,36 @@ button {
 
 .header__burger {
     display: none;
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     border: none;
     background: none;
     cursor: pointer;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
 }
 
 .header__burger span {
     display: block;
+    width: 22px;
     height: 2px;
     background: #374151;
-    margin: 6px 0;
+    margin: 5px auto;
     border-radius: 999px;
+}
+
+.nav__mobile-actions {
+    display: none;
+}
+
+.header__btn-consult--mobile,
+.header__btn-login--mobile {
+    display: none;
+    width: 100%;
+    text-align: center;
+    box-sizing: border-box;
 }
 
 .hero {
@@ -3828,34 +3852,157 @@ body.layout-auth .auth-page {
     }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 960px) {
+    .header {
+        overflow-x: clip;
+    }
+
     .header__inner {
+        position: relative;
         height: 56px;
+        gap: 8px;
+        justify-content: space-between;
+    }
+
+    .header__left {
+        flex: 1 1 0;
+        min-width: 0;
+    }
+
+    .header__center {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        flex: none;
+        width: auto;
+        height: 0;
+        min-width: 0;
+        overflow: visible;
+        pointer-events: none;
+        justify-content: flex-start;
+    }
+
+    .header__center .nav {
+        pointer-events: auto;
+    }
+
+    .header__right {
+        flex: 0 0 auto;
+        margin-left: 0;
+        gap: 0;
+    }
+
+    .header__right .header__btn-consult,
+    .header__right .header__btn-login {
+        display: none;
+    }
+
+    .header__burger {
+        display: inline-flex;
     }
 
     .nav {
         position: fixed;
-        inset: 56px 0 auto 0;
+        top: 56px;
+        left: 0;
+        right: 0;
+        z-index: 120;
         background: #ffffff;
-        padding: 8px 16px 12px;
+        padding: 12px 16px 16px;
         flex-direction: column;
-        align-items: flex-start;
-        gap: 10px;
+        align-items: stretch;
+        gap: 4px;
         border-bottom: 1px solid #e5e7eb;
-        transform: translateY(-100%);
+        box-shadow: 0 12px 28px rgba(15, 23, 42, 0.12);
+        max-height: calc(100dvh - 56px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        transform: translateY(-8px);
         opacity: 0;
+        visibility: hidden;
         pointer-events: none;
-        transition: transform 0.16s ease, opacity 0.16s ease;
+        transition: transform 0.18s ease, opacity 0.18s ease, visibility 0.18s ease;
     }
 
     .nav--open {
         transform: translateY(0);
         opacity: 1;
+        visibility: visible;
         pointer-events: all;
     }
 
-    .header__burger {
+    .nav__link {
         display: block;
+        width: 100%;
+        padding: 10px 4px;
+        font-size: 15px;
+    }
+
+    .nav__link--outlined {
+        text-align: center;
+        margin-top: 4px;
+    }
+
+    .nav__mobile-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+        margin-top: 8px;
+        padding-top: 12px;
+        border-top: 1px solid #e5e7eb;
+    }
+
+    .header__btn-consult--mobile,
+    .header__btn-login--mobile {
+        display: block;
+    }
+
+    body.nav-open {
+        overflow: hidden;
+    }
+
+    .header::before {
+        content: "";
+        position: fixed;
+        inset: 56px 0 0;
+        background: rgba(15, 23, 42, 0.45);
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        z-index: 110;
+        transition: opacity 0.18s ease, visibility 0.18s ease;
+    }
+
+    .header:has(.nav--open)::before {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+    }
+
+    .logo__image {
+        height: 36px;
+        max-width: 100%;
+        width: auto;
+    }
+
+    .logo__admin-mark {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 760px) {
+    .container {
+        padding: 0 12px;
+    }
+
+    .logo__image {
+        height: 32px;
+    }
+
+    .logo__admin-mark {
+        display: none;
     }
 
     .hero {
@@ -3886,6 +4033,85 @@ body.layout-auth .auth-page {
 
     .footer__nav {
         justify-content: flex-start;
+    }
+
+    .requests-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .requests-row {
+        min-width: 720px;
+    }
+
+    .requests-table--cabinet-appeals .requests-row,
+    .requests-table--admin-appeals .requests-row {
+        min-width: 0;
+    }
+
+    .admin-reviews-table {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .admin-reviews-row {
+        min-width: 880px;
+    }
+
+    .section {
+        padding: 28px 0 40px;
+    }
+
+    .section__head h2 {
+        font-size: 22px;
+    }
+
+    .request {
+        gap: 16px;
+    }
+
+    .request__sidebar--stack {
+        gap: 12px;
+    }
+
+    .appeal-card--chat .appeal-chat-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .appeal-chat-form__submit {
+        width: 100%;
+    }
+
+    .calc {
+        padding: 12px;
+        gap: 12px;
+    }
+
+    .calc__form,
+    .calc__result {
+        padding: 16px;
+    }
+
+    .calc__title {
+        font-size: 18px;
+    }
+
+    .cabinet-step {
+        padding: 18px 14px 22px;
+    }
+
+    .cabinet-step__head {
+        gap: 10px;
+    }
+
+    .page-cta__title {
+        font-size: 16px;
+    }
+
+    .admin-filters-form .field {
+        flex: 1 1 100%;
+        max-width: none !important;
     }
 }
 

@@ -229,17 +229,12 @@ function status_title_admin(string $code): string {
     <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="container header__inner">
-            <?php
-            $logoBase = '../';
-            $logoHref = admin_home_href();
-            $logoAdmin = true;
-            require __DIR__ . '/../includes/logo.php';
-            ?>
-            <?php require __DIR__ . '/includes/nav.php'; ?>
-        </div>
-    </header>
+    <?php
+    $logoBase = '../';
+    $logoHref = admin_home_href();
+    $logoAdmin = true;
+    require __DIR__ . '/includes/header_bar.php';
+    ?>
 
     <main class="section section--light">
         <div class="container">
@@ -574,7 +569,7 @@ function status_title_admin(string $code): string {
     </main>
 
     <?php $footerPrefix = '../'; require __DIR__ . '/../includes/footer.php'; ?>
-
+    <?php require __DIR__ . '/includes/scripts.php'; ?>
     <script>
         window.APPEAL_CHAT_CONFIG = {
             appealId: <?php echo (int) $appeal['id']; ?>,
@@ -584,7 +579,6 @@ function status_title_admin(string $code): string {
             labels: { user: 'Клиент', admin: <?php echo $isAdminUser ? "'Вы (админ)'" : "'Вы (сотрудник)'"; ?> }
         };
     </script>
-    <script src="../script.js"></script>
     <script src="../js/appeal-chat.js?v=<?php echo (int) @filemtime(__DIR__ . '/../js/appeal-chat.js'); ?>"></script>
 </body>
 </html>

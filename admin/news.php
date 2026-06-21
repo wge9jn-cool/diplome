@@ -51,17 +51,12 @@ $news = $stmt->fetchAll();
     <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="container header__inner">
-            <?php
-            $logoBase = '../';
-            $logoHref = 'index.php';
-            $logoAdmin = true;
-            require __DIR__ . '/../includes/logo.php';
-            ?>
-            <?php require __DIR__ . '/includes/nav.php'; ?>
-        </div>
-    </header>
+    <?php
+    $logoBase = '../';
+    $logoHref = 'index.php';
+    $logoAdmin = true;
+    require __DIR__ . '/includes/header_bar.php';
+    ?>
 
     <main class="section section--light">
         <div class="container">
@@ -118,6 +113,7 @@ $news = $stmt->fetchAll();
     </main>
 
     <?php $footerPrefix = '../'; require __DIR__ . '/../includes/footer.php'; ?>
+    <?php require __DIR__ . '/includes/scripts.php'; ?>
 </body>
 </html>
 

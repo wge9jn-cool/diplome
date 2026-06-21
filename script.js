@@ -18,16 +18,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const burger = document.querySelector(".header__burger");
     const nav = document.querySelector(".nav");
+    const header = document.querySelector(".header");
+
+    function setNavOpen(open) {
+        if (!nav || !burger) return;
+        nav.classList.toggle("nav--open", open);
+        burger.setAttribute("aria-expanded", open ? "true" : "false");
+        document.body.classList.toggle("nav-open", open);
+    }
 
     if (burger && nav) {
         burger.addEventListener("click", () => {
-            nav.classList.toggle("nav--open");
+            setNavOpen(!nav.classList.contains("nav--open"));
         });
 
         nav.querySelectorAll("a").forEach((link) => {
             link.addEventListener("click", () => {
-                nav.classList.remove("nav--open");
+                setNavOpen(false);
             });
+        });
+
+        if (header) {
+            document.addEventListener("click", (e) => {
+                if (!nav.classList.contains("nav--open")) return;
+                if (burger.contains(e.target) || nav.contains(e.target)) return;
+                setNavOpen(false);
+            });
+        }
+
+        window.addEventListener("resize", () => {
+            if (window.innerWidth > 960) {
+                setNavOpen(false);
+            }
         });
     }
 

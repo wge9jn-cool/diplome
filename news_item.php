@@ -28,37 +28,7 @@ if (!$news) {
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="container header__inner">
-            <div class="header__left">
-                <?php
-                $logoHref = 'index.php';
-                require __DIR__ . '/includes/logo.php';
-                ?>
-            </div>
-            <div class="header__center">
-                <nav class="nav">
-                    <a href="index.php" class="nav__link">Главная</a>
-                    <a href="services.php" class="nav__link">Услуги</a>
-                    <a href="news.php" class="nav__link">Новости</a>
-                    <a href="contacts.php" class="nav__link">Контакты</a>
-                </nav>
-            </div>
-            <div class="header__right">
-                <?php if ($user): ?>
-                    <a href="cabinet.php" class="header__btn-consult">Личный кабинет</a>
-                    <a href="logout.php" class="header__btn-login header__btn-login--logout">Выйти</a>
-                <?php else: ?>
-                    <a href="login.php" class="header__btn-login">Вход / Регистрация</a>
-                <?php endif; ?>
-                <button class="header__burger" aria-label="Меню">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
-            </div>
-        </div>
-    </header>
+    <?php $headerActive = 'news'; require __DIR__ . '/includes/header.php'; ?>
 
     <main class="section section--light">
         <div class="container">

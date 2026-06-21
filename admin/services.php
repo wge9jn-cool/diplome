@@ -49,25 +49,12 @@ $services = $stmt->fetchAll();
     <link rel="stylesheet" href="../styles.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="container header__inner">
-            <?php
-            $logoBase = '../';
-            $logoHref = 'index.php';
-            $logoAdmin = true;
-            require __DIR__ . '/../includes/logo.php';
-            ?>
-            <nav class="nav">
-                <a href="index.php" class="nav__link">Статистика</a>
-                <a href="appeals.php" class="nav__link">Обращения</a>
-                <a href="users.php" class="nav__link">Пользователи</a>
-                <a href="services.php" class="nav__link">Услуги</a>
-                <a href="news.php" class="nav__link">Новости</a>
-                <a href="settings.php" class="nav__link">Настройки</a>
-                <a href="logout.php" class="nav__link nav__link--outlined">Выйти</a>
-            </nav>
-        </div>
-    </header>
+    <?php
+    $logoBase = '../';
+    $logoHref = 'index.php';
+    $logoAdmin = true;
+    require __DIR__ . '/includes/header_bar.php';
+    ?>
 
     <main class="section section--light">
         <div class="container">
@@ -123,6 +110,8 @@ $services = $stmt->fetchAll();
             <?php endif; ?>
         </div>
     </main>
+    <?php $footerPrefix = '../'; require __DIR__ . '/../includes/footer.php'; ?>
+    <?php require __DIR__ . '/includes/scripts.php'; ?>
 </body>
 </html>
 

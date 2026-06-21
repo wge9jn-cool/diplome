@@ -9,6 +9,10 @@ if (!isset($_SESSION['user_id'])) {
 
 $userId = (int) $_SESSION['user_id'];
 
+$stmt = $pdo->prepare('SELECT id, name, email FROM users WHERE id = ? LIMIT 1');
+$stmt->execute([$userId]);
+$user = $stmt->fetch() ?: null;
+
 $stmt = $pdo->prepare('SELECT id, service, sum, status, payment_method, is_paid, created_at FROM requests WHERE user_id = ? ORDER BY created_at DESC');
 $stmt->execute([$userId]);
 $requests = $stmt->fetchAll();
@@ -43,25 +47,11 @@ function payment_title($code)
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="container header__inner">
-            <?php
-            $logoHref = 'index.php';
-            require __DIR__ . '/includes/logo.php';
-            ?>
-            <nav class="nav">
-                <a href="index.php" class="nav__link">Главная</a>
-                <a href="index.php#services" class="nav__link">Услуги</a>
-                <a href="index.php#request" class="nav__link">Новое обращение</a>
-                <a href="logout.php" class="nav__link nav__link--outlined">Выйти</a>
-            </nav>
-            <button class="header__burger" aria-label="Меню">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </header>
+    <?php
+    $headerCabinetSlimNav = true;
+    require __DIR__ . '/includes/header.php';
+    unset($headerCabinetSlimNav);
+    ?>
 
     <main class="section section--light">
         <div class="container">

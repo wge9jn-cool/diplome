@@ -68,24 +68,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-    <header class="header">
-        <div class="container header__inner">
-            <?php
-            $logoHref = 'index.php';
-            require __DIR__ . '/includes/logo.php';
-            ?>
-            <nav class="nav" aria-label="Меню личного кабинета">
-                <a href="index.php" class="nav__link">Главная</a>
-                <a href="cabinet.php" class="nav__link">Личный кабинет</a>
-                <a href="logout.php" class="nav__link nav__link--outlined">Выйти</a>
-            </nav>
-            <button class="header__burger" aria-label="Меню">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-        </div>
-    </header>
+    <?php
+    $headerCabinetSlimNav = true;
+    require __DIR__ . '/includes/header.php';
+    unset($headerCabinetSlimNav);
+    ?>
 
     <main class="section section--light">
         <div class="container">
