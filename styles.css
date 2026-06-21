@@ -3477,6 +3477,18 @@ textarea {
     width: min(980px, 100% - 32px);
 }
 
+@media (max-width: 760px) {
+    .modal__content,
+    .modal__content--wide {
+        width: calc(100% - 20px);
+        padding: 16px 14px 14px;
+    }
+
+    .modal__body--tall {
+        max-height: min(72vh, 560px);
+    }
+}
+
 .modal__body--tall {
     max-height: min(70vh, 640px);
 }
@@ -3847,8 +3859,62 @@ body.layout-auth .auth-page {
         grid-row-gap: 6px;
     }
 
-    .requests-table--cabinet-appeals .requests-row {
-        grid-template-columns: minmax(44px, 0.4fr) minmax(0, 1fr) minmax(76px, 0.55fr) minmax(100px, 0.65fr) minmax(148px, auto);
+    .requests-table--cabinet-appeals {
+        overflow-x: visible;
+    }
+
+    .requests-table--cabinet-appeals .requests-row--head {
+        display: none;
+    }
+
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 6px;
+        min-width: 0;
+        padding: 14px 16px;
+        align-items: start;
+    }
+
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div {
+        min-width: 0;
+        overflow-wrap: break-word;
+        word-break: normal;
+    }
+
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div:nth-child(1) {
+        font-weight: 600;
+        color: #0d2b6b;
+        font-size: 14px;
+    }
+
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div:nth-child(2)::before,
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div:nth-child(3)::before,
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div:nth-child(4)::before {
+        font-weight: 600;
+        color: #6b7280;
+    }
+
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div:nth-child(2)::before {
+        content: "Тема: ";
+    }
+
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div:nth-child(3)::before {
+        content: "Статус: ";
+    }
+
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div:nth-child(4)::before {
+        content: "Создано: ";
+    }
+
+    .requests-table--cabinet-appeals .requests-row:not(.requests-row--head) > div:nth-child(5) {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+        margin-top: 4px;
+        padding-top: 10px;
+        border-top: 1px solid #e5e7eb;
     }
 }
 
@@ -4044,9 +4110,8 @@ body.layout-auth .auth-page {
         min-width: 720px;
     }
 
-    .requests-table--cabinet-appeals .requests-row,
     .requests-table--admin-appeals .requests-row {
-        min-width: 0;
+        min-width: 720px;
     }
 
     .admin-reviews-table {
