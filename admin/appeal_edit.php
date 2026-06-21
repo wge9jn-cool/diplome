@@ -578,6 +578,7 @@ function status_title_admin(string $code): string {
     <script>
         window.APPEAL_CHAT_CONFIG = {
             appealId: <?php echo (int) $appeal['id']; ?>,
+            chatRole: 'admin',
             tokenUrl: '../appeal_chat_ws_token.php',
             historyUrl: '../appeal_chat.php',
             labels: { user: 'Клиент', admin: <?php echo $isAdminUser ? "'Вы (админ)'" : "'Вы (сотрудник)'"; ?> }

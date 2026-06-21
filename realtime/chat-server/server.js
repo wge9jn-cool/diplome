@@ -36,6 +36,7 @@ const DB_HOST = process.env.DB_HOST || '127.0.0.1';
 const DB_NAME = process.env.DB_NAME || 'diplom';
 const DB_USER = process.env.DB_USER || 'root';
 const DB_PASS = process.env.DB_PASS || '';
+const DB_TIMEZONE = process.env.DB_TIMEZONE || '+05:00';
 
 if (!WS_SECRET) {
     console.error('WS_SECRET is required. Copy .env.example to .env');
@@ -48,6 +49,7 @@ const pool = mysql.createPool({
     password: DB_PASS,
     database: DB_NAME,
     charset: 'utf8mb4',
+    timezone: DB_TIMEZONE,
     waitForConnections: true,
     connectionLimit: 10,
 });

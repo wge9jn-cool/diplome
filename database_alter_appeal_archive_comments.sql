@@ -1,0 +1,20 @@
+CREATE TABLE IF NOT EXISTS appeal_archive_comments (
+    id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+    appeal_id INT UNSIGNED NOT NULL,
+    user_id INT UNSIGNED NOT NULL,
+    body TEXT NOT NULL,
+    rating TINYINT UNSIGNED NOT NULL DEFAULT 5 COMMENT '1–5',
+    is_anonymous TINYINT(1) NOT NULL DEFAULT 0 COMMENT '1 = на сайте без имени',
+    status ENUM('pending', 'approved', 'rejected') NOT NULL DEFAULT 'pending',
+    calc_service_id VARCHAR(8) NULL DEFAULT NULL COMMENT 's1–s6 из каталога калькулятора',
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    moderated_at DATETIME NULL DEFAULT NULL,
+    moderator_id INT UNSIGNED NULL DEFAULT NULL,
+    KEY idx_aac_status_service (status, calc_service_id),
+    KEY idx_aac_appeal (appeal_id),
+    KEY fk_aac_user (user_id),
+    KEY fk_aac_moderator (moderator_id),
+    CONSTRAINT fk_aac_appeal FOREIGN KEY (appeal_id) REFERENCES appeals (id) ON DELETE CASCADE,
+    CONSTRAINT fk_aac_user FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_aac_moderator FOREIGN KEY (moderator_id) REFERENCES users (id) ON DELETE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

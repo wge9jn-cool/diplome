@@ -371,6 +371,7 @@ function archive_comment_status_label(string $status): string {
     <script>
         window.APPEAL_CHAT_CONFIG = {
             appealId: <?php echo (int) $appeal['id']; ?>,
+            chatRole: 'user',
             tokenUrl: 'appeal_chat_ws_token.php',
             historyUrl: 'appeal_chat.php',
             labels: { user: 'Вы', admin: 'Специалист' }

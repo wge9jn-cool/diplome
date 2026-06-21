@@ -2,6 +2,9 @@
 
 define('APP_URL', 'http://localhost');
 
+/** Часовой пояс сайта (Курган, UTC+5) */
+define('APP_TIMEZONE', 'Asia/Yekaterinburg');
+
 /** WebSocket-чат: URL сервера (локально ws://localhost:8080, на сайте wss://ваш-домен или wss://ws.ваш-домен) */
 define('CHAT_WS_URL', 'ws://localhost:8080');
 /** Общий секрет с Node-сервером (realtime/chat-server/.env → WS_SECRET) */

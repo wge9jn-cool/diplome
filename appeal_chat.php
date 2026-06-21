@@ -1,27 +1,19 @@
 <?php
 session_start();
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/includes/chat_ws.php';
 
 header('Content-Type: application/json; charset=utf-8');
 
 $appealId = isset($_GET['appeal_id']) ? (int) $_GET['appeal_id'] : (isset($_POST['appeal_id']) ? (int) $_POST['appeal_id'] : 0);
+$requestedRole = isset($_GET['role']) ? (string) $_GET['role'] : (isset($_POST['chat_role']) ? (string) $_POST['chat_role'] : 'user');
 if ($appealId <= 0) {
     echo json_encode(['error' => 'invalid appeal']);
     exit;
 }
 
-$isAdmin = isset($_SESSION['admin_id']);
-$userId = isset($_SESSION['user_id']) ? (int) $_SESSION['user_id'] : 0;
-
-// Проверка доступа
-$stmt = $pdo->prepare('SELECT user_id FROM appeals WHERE id = ? LIMIT 1');
-$stmt->execute([$appealId]);
-$appeal = $stmt->fetch();
-if (!$appeal) {
-    echo json_encode(['error' => 'not found']);
-    exit;
-}
-if (!$isAdmin && (int)$appeal['user_id'] !== $userId) {
+$sender = chat_resolve_sender($pdo, $appealId, $requestedRole);
+if ($sender === null) {
     echo json_encode(['error' => 'forbidden']);
     exit;
 }
@@ -45,8 +37,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo json_encode(['error' => 'empty']);
         exit;
     }
-    $senderType = $isAdmin ? 'admin' : 'user';
-    $senderId = $isAdmin ? (int) $_SESSION['admin_id'] : $userId;
+
+    $senderType = $sender['sender_type'];
+    $senderId = $sender['sender_id'];
 
     $stmt = $pdo->prepare('INSERT INTO appeal_messages (appeal_id, sender_type, sender_id, message) VALUES (?, ?, ?, ?)');
     $stmt->execute([$appealId, $senderType, $senderId, $message]);

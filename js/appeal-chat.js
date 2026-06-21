@@ -9,6 +9,7 @@
     if (!cfg || !cfg.appealId) return;
 
     var appealId = cfg.appealId;
+    var chatRole = cfg.chatRole === 'admin' ? 'admin' : 'user';
     var tokenUrl = cfg.tokenUrl || 'appeal_chat_ws_token.php';
     var historyUrl = cfg.historyUrl || 'appeal_chat.php';
     var fallbackPostUrl = cfg.fallbackPostUrl || historyUrl;
@@ -100,7 +101,7 @@
             } catch (e) {}
             ws = null;
         }
-        fetch(tokenUrl + '?appeal_id=' + encodeURIComponent(appealId))
+        fetch(tokenUrl + '?appeal_id=' + encodeURIComponent(appealId) + '&role=' + encodeURIComponent(chatRole))
             .then(function (r) {
                 return r.json();
             })
@@ -145,6 +146,7 @@
     function sendViaHttp(text) {
         var fd = new FormData();
         fd.append('appeal_id', appealId);
+        fd.append('chat_role', chatRole);
         fd.append('message', text);
         return fetch(fallbackPostUrl, { method: 'POST', body: fd })
             .then(function (r) {
