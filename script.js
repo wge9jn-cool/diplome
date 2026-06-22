@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const burger = document.querySelector(".header__burger");
     const nav = document.querySelector(".nav");
-    const header = document.querySelector(".header");
 
     function setNavOpen(open) {
         if (!nav || !burger) return;
@@ -27,9 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
         document.body.classList.toggle("nav-open", open);
     }
 
+    function isNavUiTarget(target) {
+        if (!(target instanceof Element)) return false;
+        return Boolean(target.closest(".header__burger, .nav"));
+    }
+
     if (burger && nav) {
-        burger.addEventListener("click", () => {
-            setNavOpen(!nav.classList.contains("nav--open"));
+        let navIgnoreOutsideUntil = 0;
+
+        burger.addEventListener("click", (e) => {
+            e.stopPropagation();
+            const opening = !nav.classList.contains("nav--open");
+            setNavOpen(opening);
+            if (opening) {
+                navIgnoreOutsideUntil = Date.now() + 350;
+            }
         });
 
         nav.querySelectorAll("a").forEach((link) => {
@@ -38,13 +49,12 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        if (header) {
-            document.addEventListener("click", (e) => {
-                if (!nav.classList.contains("nav--open")) return;
-                if (burger.contains(e.target) || nav.contains(e.target)) return;
-                setNavOpen(false);
-            });
-        }
+        document.addEventListener("click", (e) => {
+            if (!nav.classList.contains("nav--open")) return;
+            if (Date.now() < navIgnoreOutsideUntil) return;
+            if (isNavUiTarget(e.target)) return;
+            setNavOpen(false);
+        });
 
         window.addEventListener("resize", () => {
             if (window.innerWidth > 960) {

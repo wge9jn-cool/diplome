@@ -3950,6 +3950,10 @@ body.layout-auth .auth-page {
     }
 
     .header__center .nav {
+        pointer-events: none;
+    }
+
+    .header__center .nav.nav--open {
         pointer-events: auto;
     }
 
@@ -3966,6 +3970,8 @@ body.layout-auth .auth-page {
 
     .header__burger {
         display: inline-flex;
+        position: relative;
+        z-index: 130;
     }
 
     .nav {
