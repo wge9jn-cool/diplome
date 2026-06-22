@@ -70,4 +70,5 @@ $__hNav = function ($key) use ($headerActive) {
                 </button>
             </div>
         </div>
+        <button type="button" class="nav-backdrop" aria-label="Закрыть меню" hidden></button>
     </header>

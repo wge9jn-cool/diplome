@@ -151,6 +151,6 @@ if (isset($_SESSION['user_id'])) {
 
     <?php require __DIR__ . '/includes/footer.php'; ?>
 
-    <script src="script.js"></script>
+    <?php require __DIR__ . '/includes/scripts_public.php'; ?>
 </body>
 </html>

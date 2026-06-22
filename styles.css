@@ -4035,22 +4035,21 @@ body.layout-auth .auth-page {
         overflow: hidden;
     }
 
-    .header::before {
-        content: "";
+    .nav-backdrop {
+        display: none;
         position: fixed;
         inset: 56px 0 0;
-        background: rgba(15, 23, 42, 0.45);
-        opacity: 0;
-        visibility: hidden;
-        pointer-events: none;
         z-index: 110;
-        transition: opacity 0.18s ease, visibility 0.18s ease;
+        border: none;
+        padding: 0;
+        margin: 0;
+        background: rgba(15, 23, 42, 0.45);
+        cursor: pointer;
+        -webkit-tap-highlight-color: transparent;
     }
 
-    .header:has(.nav--open)::before {
-        opacity: 1;
-        visibility: visible;
-        pointer-events: auto;
+    .header--nav-open .nav-backdrop {
+        display: block;
     }
 
     .logo__image {

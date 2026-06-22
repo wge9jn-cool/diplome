@@ -18,29 +18,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const burger = document.querySelector(".header__burger");
     const nav = document.querySelector(".nav");
+    const headerEl = document.querySelector(".header");
+    const navBackdrop = document.querySelector(".nav-backdrop");
 
     function setNavOpen(open) {
         if (!nav || !burger) return;
         nav.classList.toggle("nav--open", open);
         burger.setAttribute("aria-expanded", open ? "true" : "false");
         document.body.classList.toggle("nav-open", open);
-    }
-
-    function isNavUiTarget(target) {
-        if (!(target instanceof Element)) return false;
-        return Boolean(target.closest(".header__burger, .nav"));
+        if (headerEl) {
+            headerEl.classList.toggle("header--nav-open", open);
+        }
+        if (navBackdrop) {
+            navBackdrop.hidden = !open;
+        }
     }
 
     if (burger && nav) {
-        let navIgnoreOutsideUntil = 0;
-
         burger.addEventListener("click", (e) => {
+            e.preventDefault();
             e.stopPropagation();
-            const opening = !nav.classList.contains("nav--open");
-            setNavOpen(opening);
-            if (opening) {
-                navIgnoreOutsideUntil = Date.now() + 350;
-            }
+            setNavOpen(!nav.classList.contains("nav--open"));
         });
 
         nav.querySelectorAll("a").forEach((link) => {
@@ -49,12 +47,13 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
 
-        document.addEventListener("click", (e) => {
-            if (!nav.classList.contains("nav--open")) return;
-            if (Date.now() < navIgnoreOutsideUntil) return;
-            if (isNavUiTarget(e.target)) return;
-            setNavOpen(false);
-        });
+        if (navBackdrop) {
+            navBackdrop.addEventListener("click", (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setNavOpen(false);
+            });
+        }
 
         window.addEventListener("resize", () => {
             if (window.innerWidth > 960) {

@@ -367,7 +367,7 @@ function archive_comment_status_label(string $status): string {
 
     <?php require __DIR__ . '/includes/footer.php'; ?>
 
-    <script src="script.js"></script>
+    <?php require __DIR__ . '/includes/scripts_public.php'; ?>
     <script>
         window.APPEAL_CHAT_CONFIG = {
             appealId: <?php echo (int) $appeal['id']; ?>,

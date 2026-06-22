@@ -18,4 +18,5 @@ declare(strict_types=1);
             </button>
         </div>
     </div>
+    <button type="button" class="nav-backdrop" aria-label="Закрыть меню" hidden></button>
 </header>

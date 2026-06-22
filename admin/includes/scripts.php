@@ -3,4 +3,4 @@ declare(strict_types=1);
 /** Подключать перед </body> на страницах admin/ */
 $adminScriptBase = $logoBase ?? '../';
 ?>
-<script src="<?php echo htmlspecialchars($adminScriptBase . 'script.js', ENT_QUOTES, 'UTF-8'); ?>"></script>
+<script src="<?php echo htmlspecialchars($adminScriptBase . 'script.js?v=' . (int) @filemtime(__DIR__ . '/../../script.js'), ENT_QUOTES, 'UTF-8'); ?>"></script>
